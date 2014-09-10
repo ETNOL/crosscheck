@@ -1,0 +1,17 @@
+<div class="container">
+  <h2>Users</h2>
+  <div class="row">
+  <div ng-repeat="user in users" class="col-sm-4 event">
+      <div class="thumbnail">
+        <div class="overlay"></div>
+        <a href='' ng-click="signIn(user)"><img class="img-responsive" alt="alternative text" src="{{ user.avatar }}"></a>
+      </div>
+<!--       <span class="label label-info date">Jun 12</span> 
+      <span class="label label-primary">Boys 5$</span>
+      <span class="label label-danger">Girls FREE</span> -->
+      <p class="text-center">
+        {{ user.name }}
+      </p>
+    </div>
+  </div>
+</div>
