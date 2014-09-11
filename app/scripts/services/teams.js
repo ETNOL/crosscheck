@@ -12,7 +12,7 @@ app.factory('Team', function() {
 
 	var Team = {
 		
-		members:members,
+		all:members,
 		
 		memberCount:members.length
 	};

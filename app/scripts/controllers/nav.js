@@ -3,9 +3,7 @@
 
 app.controller('NavCtrl', function($location, $scope, User) {
 
-	$scope.user = function() {
-		return User.getCurrent();
-	}
+	$scope.user = User.getCurrent();
 
 	$scope.signedIn = function() {
 		return User.signedIn();

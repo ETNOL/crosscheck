@@ -1,32 +1,38 @@
 'use strict';
 
 
-app.factory("List", function() {
+app.factory("List", function($rootScope, $firebase, FIREBASE_URL) {
 
-	var items = [
-	{
-		item:"Raise stabilizers", 
-		checks:0 
-	},{
-		item:"Lock windows",
-		checks:0
-	}
-	];
+	var ref = new Firebase(FIREBASE_URL + "items" );
+
+	var items = $firebase(ref).$asArray();
+
+	var currentUser = $rootScope.currentUser;
+	console.log(currentUser);
 
 	var List = {
 		all:items,
 		
 		add: function (input) {
-			items.push(input);
+			items.$add(input);
 		},
 		remove: function(index) {
-			items.splice(index, 1);
+			items.$remove(index);
 		},
 		check: function(index) {
-			items[index].checks++;
+			items[index].checked++;
+			items.$save(index);
 		},
-		checkCount: function(index) {
-			return items[index].checks;
+		checks: function(index) {
+			return items[index].checked;
+		},
+
+		resetList: function() {
+			console.log("reset called!");
+			for (var i = 0; i < items.length; i++) {
+				items[i].checked = 0;
+				items.$save(i);
+			}
 		}
 
 	}

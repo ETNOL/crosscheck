@@ -14,14 +14,15 @@ var app = angular.module('crossCheckApp', [
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
-  ]);
-
+    'ngTouch',
+    'firebase'
+  ])
+.constant('FIREBASE_URL', 'https://amber-fire-3032.firebaseio.com/');
 
 app.config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/users.html',
+        templateUrl: 'views/login.html',
         controller: 'AuthCtrl'
       })
       .when('/list', {
