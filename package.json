@@ -1,10 +1,9 @@
 {
   "name": "crosscheck",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
     "gzippo": "~0.2.0",
-    "express": "~4.9.0",
-    "octicons": "2.0.0"
+    "express": "~4.9.0"
   },
   "devDependencies": {
     "grunt": "^0.4.1",
