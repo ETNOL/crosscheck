@@ -1,3 +1,4 @@
+/* global app:true */
 'use strict';
 
 /**
@@ -28,6 +29,10 @@ app.config(function ($routeProvider) {
       .when('/list', {
         templateUrl:' views/list.html',
         controller: 'ListCtrl'
+      })
+      .when('/register', {
+        templateUrl:'views/register.html',
+        controller:'AuthCtrl'
       })
       .otherwise({
         redirectTo: '/'

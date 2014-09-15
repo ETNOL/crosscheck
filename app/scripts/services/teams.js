@@ -1,20 +1,23 @@
 'use strict';
 
 
-app.factory('Team', function() {
+app.factory('Team', function(FIREBASE_URL) {
 
-	var members = [
+	var team = [
 	{
 		name:"Eric"
-	}, {
+	},{
 		name:"Ariel"
-	}];
+	}
+	];
+
+	var ref = new Firebase(FIREBASE_URL + 'teams');
 
 	var Team = {
 		
-		all:members,
+		all:team,
 		
-		memberCount:members.length
+		memberCount:team.length
 	};
 
 	return Team;

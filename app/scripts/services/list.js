@@ -3,14 +3,13 @@
 
 app.factory("List", function($rootScope, $firebase, FIREBASE_URL) {
 
+
 	var ref = new Firebase(FIREBASE_URL + "items" );
 
 	var items = $firebase(ref).$asArray();
 
-	var currentUser = $rootScope.currentUser;
-	console.log(currentUser);
-
 	var List = {
+		
 		all:items,
 		
 		add: function (input) {

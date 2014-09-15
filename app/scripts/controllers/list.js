@@ -14,11 +14,11 @@ app.controller('ListCtrl', function (Team, List, $scope) {
 			checkArray.push(i);
 		}
 		return checkArray;
-	}
+	};
 
 	$scope.checks = function(index) {
 		return $scope.items[index].checked;
-	}
+	};
 
 	$scope.checkItem = function(index) {
 		List.check(index);
