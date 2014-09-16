@@ -57,6 +57,8 @@ app.factory('User', function($rootScope, $firebase, FIREBASE_URL) {
 
 	$rootScope.$on('$firebaseSimpleLogin:login', function(e, authUser) {
 		var query = $firebase(ref.startAt(authUser.uid).endAt(authUser.uid)).$asArray();
+		console.log("Query:");
+		console.log(query);
 		query.$loaded(function () {
 			setCurrentUser(query[0].id);
 		});

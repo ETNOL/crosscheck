@@ -18,7 +18,7 @@ app.controller('ListCtrl', function (Team, List, $scope, $routeParams) {
 	};
 
 	$scope.checks = function(index) {
-		return List(index).checks();
+		return List.checks(index);
 	};
 
 	$scope.checkItem = function(index) {
@@ -28,7 +28,7 @@ app.controller('ListCtrl', function (Team, List, $scope, $routeParams) {
 	$scope.addItem = function () {
 		List.add({
 			item:$scope.item.description,
-			checked:0
+			checks:0
 							});
 		$scope.item = {description:""};
 	};
