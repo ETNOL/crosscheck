@@ -6,8 +6,8 @@ app.controller("AuthCtrl", function($location, $scope, $rootScope, Auth, User) {
 
 
 	$scope.login = function(user) {
-		Auth.login(user);
-		$location.path("/list");
+		Auth.login($scope.user);
+		$location.path('/lists');
 	};
 
 	$scope.register = function() {
@@ -18,11 +18,6 @@ app.controller("AuthCtrl", function($location, $scope, $rootScope, Auth, User) {
 			$scope.error = error.toString();
 		}) ;
 	};
-
-	$scope.$on('$firebaseSimpleLogin:login', function() {
-		$location.path('/');
-	});
-
 
 
 });

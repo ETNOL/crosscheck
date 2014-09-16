@@ -2,7 +2,7 @@
 
 
 
-app.factory("Auth", function($rootScope, $firebaseSimpleLogin, FIREBASE_URL) {
+app.factory("Auth", function(User, $rootScope, $firebaseSimpleLogin, FIREBASE_URL) {
 
 
 	var ref = new Firebase(FIREBASE_URL);
@@ -13,8 +13,16 @@ app.factory("Auth", function($rootScope, $firebaseSimpleLogin, FIREBASE_URL) {
 		register:function(user) {
 			return auth.$createUser(user.email, user.password);
 		},
+
 		login:function(user) {
-			return auth.$login('password', user);
+			user.rememberMe = "true";
+			auth.$login('password', user).then(function(user) {
+				console.log("Auth.login user:\n ");
+				console.log(user);
+				User.initUser(user.id);
+			}, function(e) {
+				console.log(e);
+			});
 		},
 		signedIn:function() {
 			return auth.user !== null;

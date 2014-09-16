@@ -1,5 +1,16 @@
-<div ng-repeat="list in lists">
-
-	<div> {{ list }}</div>
-
+<div class="row">
+	<div ng-repeat="list in lists">
+		<div class="col-xs-12">
+				<a class="repeated-item btn btn-primary btn-lg btn-block" href="" ng-click="loadList(list)">{{ list.listName }}</a><br/>
+		</div>
+	</div>
+<br/>
+<div class="row">
+	<div class="col-xs-9">
+		<form class="form-inline" ng-submit="newList()">
+			<input type="text" class="form-control" ng-model="newList.listName">
+			<input type="submit" class="btn btn-primary" value="Add new list">			
+		</form>
+	</div>
 </div>
+	

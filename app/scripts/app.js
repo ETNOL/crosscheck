@@ -30,6 +30,10 @@ app.config(function ($routeProvider) {
         templateUrl:' views/list.html',
         controller: 'ListCtrl'
       })
+      .when('/lists', {
+        templateUrl:'views/lists.html',
+        controller:'ListsCtrl'
+      })
       .when('/register', {
         templateUrl:'views/register.html',
         controller:'AuthCtrl'

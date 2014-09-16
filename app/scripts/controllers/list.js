@@ -1,12 +1,13 @@
 'use strict';
 
 
-app.controller('ListCtrl', function (Team, List, $scope) {
+app.controller('ListCtrl', function (Team, List, $scope, $routeParams) {
 
+	$scope.list = List.list;
+ 
+	$scope.items = List.items;
 
- $scope.items = List.all;
-
- $scope.teamSize = Team.all.length;
+	$scope.teamSize = Team.all.length;
 
 	$scope.totalChecks = function(index) {
 		var checkArray = [];
@@ -17,7 +18,7 @@ app.controller('ListCtrl', function (Team, List, $scope) {
 	};
 
 	$scope.checks = function(index) {
-		return $scope.items[index].checked;
+		return List(index).checks();
 	};
 
 	$scope.checkItem = function(index) {

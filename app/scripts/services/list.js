@@ -1,17 +1,17 @@
 'use strict';
 
 
-app.factory("List", function($rootScope, $firebase, FIREBASE_URL) {
-
-
-	var ref = new Firebase(FIREBASE_URL + "items" );
-
-	var items = $firebase(ref).$asArray();
+app.factory("List", function(User, $rootScope, $firebase, FIREBASE_URL) {
+	
+	var ref = new Firebase(FIREBASE_URL + "/lists")
+	
+	var list = $firebase(ref.child($rootScope.currentUser.id).child($rootScope.listId)).$asObject();
+	var items = $firebase(ref.child($rootScope.currentUser.id).child($rootScope.listId).child("items")).$asArray();
 
 	var List = {
 		
-		all:items,
-		
+		items:items,
+
 		add: function (input) {
 			items.$add(input);
 		},
@@ -19,20 +19,24 @@ app.factory("List", function($rootScope, $firebase, FIREBASE_URL) {
 			items.$remove(index);
 		},
 		check: function(index) {
-			items[index].checked++;
+			items[index].checks++;
 			items.$save(index);
 		},
 		checks: function(index) {
-			return items[index].checked;
+			return items[index].checks;
 		},
 
 		resetList: function() {
 			console.log("reset called!");
 			for (var i = 0; i < items.length; i++) {
-				items[i].checked = 0;
+				items[i].checks = 0;
 				items.$save(i);
 			}
 		}
+
+		// getList: function(userId, listId) {
+		// 	list = $firebase(ref.child(userId).child(listId)).$asObject();
+		// }
 
 	}
 
