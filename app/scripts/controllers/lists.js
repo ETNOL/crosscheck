@@ -3,9 +3,9 @@
 
 app.controller("ListsCtrl", function($scope, $rootScope, $firebase, FIREBASE_URL, $location, User) {
 	
-	// if ( !User.signedIn() ) {
-	// 	$location.path("/");
-	// }
+	if ( !User.signedIn() ) {
+		$location.path("/");
+	}
 
 	var ref = new Firebase(FIREBASE_URL + "/lists");
 

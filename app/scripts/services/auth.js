@@ -19,7 +19,7 @@ app.factory("Auth", function(User, $rootScope, $firebaseSimpleLogin, FIREBASE_UR
 			auth.$login('password', user).then(function(user) {
 				console.log("Auth.login user:\n ");
 				console.log(user);
-				User.initUser(user.id);
+				User.initUser(user);
 			}, function(e) {
 				console.log(e);
 			});

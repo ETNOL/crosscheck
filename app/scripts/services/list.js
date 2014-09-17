@@ -5,8 +5,8 @@ app.factory("List", function(User, $rootScope, $firebase, FIREBASE_URL) {
 	
 	var ref = new Firebase(FIREBASE_URL + "/lists")
 	
-	var list = $firebase(ref.child($rootScope.currentUser.id).child($rootScope.listId)).$asObject();
-	var items = $firebase(ref.child($rootScope.currentUser.id).child($rootScope.listId).child("items")).$asArray();
+	var list = $firebase(ref.child($rootScope.currentUser.$id).child($rootScope.listId)).$asObject();
+	var items = $firebase(ref.child($rootScope.currentUser.$id).child($rootScope.listId).child("items")).$asArray();
 
 	var List = {
 		
@@ -33,12 +33,7 @@ app.factory("List", function(User, $rootScope, $firebase, FIREBASE_URL) {
 				items.$save(i);
 			}
 		}
-
-		// getList: function(userId, listId) {
-		// 	list = $firebase(ref.child(userId).child(listId)).$asObject();
-		// }
-
-	}
+	};
 
 	return List;
 })

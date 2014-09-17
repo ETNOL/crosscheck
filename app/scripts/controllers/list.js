@@ -3,7 +3,6 @@
 
 app.controller('ListCtrl', function (Team, List, $scope, $routeParams) {
 
-	$scope.list = List.list;
  
 	$scope.items = List.items;
 

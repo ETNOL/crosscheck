@@ -1,7 +1,7 @@
 'use strict';
 
 
-app.factory('User', function($rootScope, $firebase, FIREBASE_URL) {
+app.factory('User', function($rootScope, $location, $firebase, FIREBASE_URL) {
 
 	var ref = new Firebase(FIREBASE_URL + 'crossCheckUsers');
 
@@ -26,8 +26,8 @@ app.factory('User', function($rootScope, $firebase, FIREBASE_URL) {
 			return user;
 		},
 
-		setCurrent:function(id) {
-			$rootScope.currentUser = User.findById(id);
+		setCurrent:function(user) {
+			$rootScope.currentUser = user;
 		},
 
 		getCurrent:function() {
@@ -35,12 +35,13 @@ app.factory('User', function($rootScope, $firebase, FIREBASE_URL) {
 		},
 
 		signedIn:function() {
-			return $rootScope.currentUser != undefined;
+			return $rootScope.currentUser !== undefined;
 		},
 		// Grab user object and save it to $rootscope.
-		initUser: function(id) {
-			User.setCurrent(id);
-			User.initLists(id);
+		initUser: function(user) {
+			User.setCurrent(user);
+			User.initLists(user.id);
+			console.log("User initialized!");
 		},
 		
 		initLists:function(id) {
@@ -51,23 +52,23 @@ app.factory('User', function($rootScope, $firebase, FIREBASE_URL) {
 	};
 
 	// Sets up current user on the root scope during $firebase emitter at first load //
-	function setCurrentUser (id) {
-		User.initUser(id);
+	function setCurrentUser (user) {
+		User.initUser(user);
 	}
 
-	$rootScope.$on('$firebaseSimpleLogin:login', function(e, authUser) {
-		var query = $firebase(ref.startAt(authUser.uid).endAt(authUser.uid)).$asArray();
-		console.log("Query:");
-		console.log(query);
-		query.$loaded(function () {
-			setCurrentUser(query[0].id);
-		});
+$rootScope.$on('$firebaseSimpleLogin:login', function(e, authUser) {
+	console.log(authUser);
+	var query = $firebase(ref.startAt(authUser.$id).endAt(authUser.$id)).$asArray();
+	query.$loaded(function () {
+		setCurrentUser(query[0]);
+		$location.path("/lists");
 	});
+});
 
-	$rootScope.$on('$firebaseSimpleLogin:logout', function() {
-		delete $rootScope.currentUser;
-	});
+$rootScope.$on('$firebaseSimpleLogin:logout', function() {
+	delete $rootScope.currentUser;
+});
 
-	return User;
+return User;
 
 })
