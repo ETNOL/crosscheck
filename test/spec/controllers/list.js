@@ -6,29 +6,17 @@ describe('Controller: ListCtrl', function () {
   beforeEach(module('crossCheckApp'));
 
   var ListCtrl,
-    scope,
-    team_service,
-    list_service;
-
+    scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function (Team, List, $controller, $rootScope) {
+  beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    team_service = Team;
-    list_service = List;
     ListCtrl = $controller('ListCtrl', {
-      $scope: scope,
-      Team:team_service,
-      List:list_service
+      $scope: scope
     });
   }));
 
-  it('should report team size', function() {
-    expect(scope.teamSize).toBe(2);
+  it('should attach a integer of teamsize to the scope', function () {
+    expect(scope.teamSize).toBe(typeof Integer);
   });
-
-  it('should contain an array of all items', function() {
-    expect(typeof scope.items ).toBe('object');
-  });
-
 });

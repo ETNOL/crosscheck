@@ -3,19 +3,16 @@
 
 app.controller("ListsCtrl", function($scope, $rootScope, $firebase, FIREBASE_URL, $location, User) {
 	
-	if ( !User.signedIn() ) {
-		$location.path("/");
-	}
 
 	var ref = new Firebase(FIREBASE_URL + "/lists");
 
-	$scope.user = User.getCurrent();
 
-	$scope.lists = $rootScope.userLists;
+	$scope.user;
+
+	$scope.lists;
 
 	$scope.loadList = function (list) {
-		$rootScope.listId = list.$id;
-		$location.path("/list");
+		$location.path( "list/" + list.$id );
 	}
 
 	$scope.newList = function() {
@@ -26,6 +23,5 @@ app.controller("ListsCtrl", function($scope, $rootScope, $firebase, FIREBASE_URL
 		};
 		list.push(newList);
 	}
-
 
 });

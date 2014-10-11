@@ -26,7 +26,7 @@ app.config(function ($routeProvider) {
         templateUrl: 'views/login.html',
         controller: 'AuthCtrl'
       })
-      .when('/list', {
+      .when('/list/:listid', {
         templateUrl:' views/list.html',
         controller: 'ListCtrl'
       })

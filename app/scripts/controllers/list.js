@@ -1,11 +1,12 @@
 'use strict';
 
 
-app.controller('ListCtrl', function (Team, List, $scope, $routeParams) {
+app.controller('ListCtrl', function (Team, List, $routeParams, $scope, User, $rootScope, $firebase, FIREBASE_URL) {
 
+	var ref = new Firebase(FIREBASE_URL + "/lists")
  
-	$scope.items = List.items;
-
+	$scope.items;
+	
 	$scope.teamSize = Team.all.length;
 
 	$scope.totalChecks = function(index) {
@@ -45,5 +46,13 @@ app.controller('ListCtrl', function (Team, List, $scope, $routeParams) {
 		}
 	};
 
+	function initializeListItems () {
+		User.getCurrent().then(function(user) {
+			console.log($routeParams);
+			List.items = $firebase(ref.child(user.id).child($routeParams.listid).child("items")).$asArray();
+			$scope.items = List.items;
+		})
+	}
 
+	initializeListItems();
 });

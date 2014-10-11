@@ -7,7 +7,7 @@ app.controller("AuthCtrl", function($location, $scope, $rootScope, Auth, User) {
 	if ( User.signedIn() ) {
 		$location.path("/lists");
 	}
-	
+
 	$scope.login = function(user) {
 		Auth.login($scope.user);
 		$location.path('/lists');
@@ -21,6 +21,5 @@ app.controller("AuthCtrl", function($location, $scope, $rootScope, Auth, User) {
 			$scope.error = error.toString();
 		}) ;
 	};
-
 
 });

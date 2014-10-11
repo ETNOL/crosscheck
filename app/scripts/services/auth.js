@@ -2,7 +2,7 @@
 
 
 
-app.factory("Auth", function(User, $rootScope, $firebaseSimpleLogin, FIREBASE_URL) {
+app.factory("Auth", function(User, $location, $rootScope, $firebaseSimpleLogin, FIREBASE_URL) {
 
 
 	var ref = new Firebase(FIREBASE_URL);
@@ -17,9 +17,8 @@ app.factory("Auth", function(User, $rootScope, $firebaseSimpleLogin, FIREBASE_UR
 		login:function(user) {
 			user.rememberMe = "true";
 			auth.$login('password', user).then(function(user) {
-				console.log("Auth.login user:\n ");
-				console.log(user);
 				User.initUser(user);
+				$location.path("/lists");
 			}, function(e) {
 				console.log(e);
 			});
@@ -29,6 +28,10 @@ app.factory("Auth", function(User, $rootScope, $firebaseSimpleLogin, FIREBASE_UR
 		},
 		logout:function() {
 			auth.$logout();
+			$location.path('/');
+			delete $rootScope.currentUser;
+			delete $rootScope.userLists;
+			delete $rootScope.listId;
 		}
 
 	};
