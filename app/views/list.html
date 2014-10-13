@@ -1,7 +1,7 @@
 <div class="row">
 <p> {{ listName }} </p>
 	<div ng-repeat="item in items">
-		<div ng-hide="checks($index) == teamSize" class="col-xs-12">
+		<div ng-hide="checks($index) == team.length" class="col-xs-12">
 				<a class="repeated-item btn btn-info btn-lg btn-block" href="" ng-click="checkItem($index)">{{ item.item }}<span ng-repeat="check in totalChecks($index)"><span class="glyphicon glyphicon-ok"></span></span></a><br/>
 		</div>
 	</div>

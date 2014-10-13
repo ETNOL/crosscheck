@@ -4,14 +4,10 @@
 app.factory("List", function(User, $rootScope, $firebase, FIREBASE_URL) {
 	
 	var List = {
+
+		object:{},
 		
 		items:[],
-
-		team:[],
-
-		setItems:function (itemsArray) {
-			this.items = itemsArray;
-		},
 
 		add: function (input) {
 			this.items.$add(input);
@@ -20,11 +16,33 @@ app.factory("List", function(User, $rootScope, $firebase, FIREBASE_URL) {
 			this.items.$remove(index);
 		},
 		check: function(index) {
-			this.items[index].checks++;
+			//Checks will need its own Ref established to push each individually relative check//
+			var currentUserId = $rootScope.currentUser.id;
+			var checkedArray = [];
+			
+			if (this.items[index].checks) {
+				for (var i = 0; i < this.items[index].checks.length; i++) {
+					checkedArray.push(this.items[index].checks[i]);
+				}
+			}
+
+			if (checkedArray.length == 0) {
+				this.items[index].checks = {0:currentUserId};
+			} else if (checkedArray.indexOf(currentUserId) == -1) {
+				this.items[index].checks[checkedArray.length] = currentUserId;
+			} else {
+				var indexToDelete = checkedArray.indexOf(currentUserId);
+				this.items[index].checks.splice(indexToDelete, 1);
+			}
+			
 			this.items.$save(index);
 		},
 		checks: function(index) {
-			return this.items[index].checks;
+			if (this.items[index].checks) {
+				return this.items[index].checks.length;
+			} else {
+				return 0;
+			}			
 		},
 
 		resetList: function() {

@@ -1,7 +1,7 @@
 'use strict';
 
 
-app.factory('Team', function(User, FIREBASE_URL) {
+app.factory('Team', function(List, User, FIREBASE_URL) {
 
 	var team = [
 	{
@@ -11,16 +11,21 @@ app.factory('Team', function(User, FIREBASE_URL) {
 	}
 	];
 
+
 	var Team = {
 		
-		all:team,
-		
-		memberCount:team.length,
-
-		add: function(email) {
-			User.findByEmail(email).then(function(user) {
-			console.log("User found!" + user);
-			});
+		members:[],
+		// function(listId, listName, user)
+		add: function(user) {
+			// First, add member to the list reference object //
+			var newMember = {
+				email:user.email,
+				id:user.id,
+				username: user.$id
+			}
+			this.members.$add(newMember);	
+			//Second, add the list to the user's lists //
+			User.addList(List.object.$id, List.object.listName, user.email); 
 		}
 	};
 

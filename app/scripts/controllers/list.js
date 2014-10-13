@@ -7,11 +7,7 @@ app.controller('ListCtrl', function (Team, List, $routeParams, $scope, User, $fi
  
 	$scope.items;
 
-	$scope.team;
-
-	$scope.teamSize = Team.all.length;
-
-	
+	$scope.team;	
 
 	$scope.totalChecks = function(index) {
 		var checkArray = [];
@@ -62,11 +58,11 @@ app.controller('ListCtrl', function (Team, List, $routeParams, $scope, User, $fi
 
 	function initializeListItems () {
 		User.getCurrent().then(function(user) {
-			console.log($routeParams);
-			List.items = $firebase(ref.child(user.id).child($routeParams.listid).child("items")).$asArray();
-			Team.members = $firebase(ref.child(user.id).child($routeParams.listid).child("team")).$asArray();
+			List.object = $firebase(ref.child($routeParams.listid)).$asObject(); 
+			List.items = $firebase(ref.child($routeParams.listid).child("items")).$asArray();
+			Team.members = $firebase(ref.child($routeParams.listid).child("members")).$asArray();
 			$scope.items = List.items;
-			$scope.team = List.team;
+			$scope.team = Team.members;
 		})
 	}
 
