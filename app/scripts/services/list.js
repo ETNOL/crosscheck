@@ -7,6 +7,8 @@ app.factory("List", function(User, $rootScope, $firebase, FIREBASE_URL) {
 		
 		items:[],
 
+		team:[],
+
 		setItems:function (itemsArray) {
 			this.items = itemsArray;
 		},

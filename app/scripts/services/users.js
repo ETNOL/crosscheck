@@ -26,6 +26,26 @@ app.factory('User', function($rootScope, $q, $firebase, FIREBASE_URL) {
 			return user;
 		},
 
+		findByEmail: function(email) {
+			var deferred = $q.defer();
+		  setTimeout(function() {
+		    console.log("fetching user...");
+				var users = $firebase(ref).$asArray();
+				for (var user in users) {
+					console.log(user);
+					if ( user.email && user.email == email) {
+						console.log("if" + user);
+		      	deferred.resolve(user);
+		    	} else {
+		    		console.log("else");
+		      	deferred.reject("No user found");
+		    	}
+				}
+		  }, 1000);
+
+		  return deferred.promise;
+		},
+
 		setCurrent:function(user) {
 			$rootScope.currentUser = user;
 		},
@@ -63,9 +83,10 @@ app.factory('User', function($rootScope, $q, $firebase, FIREBASE_URL) {
 	}
 
 	$rootScope.$on('$firebaseSimpleLogin:login', function(e, authUser) {
-		var query = $firebase(ref.startAt(authUser.$id).endAt(authUser.$id)).$asArray();
+		console.log(authUser);
+		var query = $firebase(ref.child(authUser.id)).$asObject();
 		query.$loaded(function () {
-			setCurrentUser(authUser);
+			setCurrentUser(query);
 		});
 	});
 

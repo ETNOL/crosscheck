@@ -16,6 +16,11 @@
 	</div>
 	<div class="col-xs-3">
 			<button ng-click="resetList()" class="btn btn-warning">Reset List</button>
+			<button ng-click="toggleTeamMenu()" class="btn btn-info">Team</button>
 	</div>
 </div><br/>
+<div ng-show="teamMenu()">
+	<ng-include  src=" 'views/team.html' "></ng-include>
+</div>
+
 

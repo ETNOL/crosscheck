@@ -17,7 +17,6 @@ app.factory("Auth", function(User, $location, $rootScope, $firebaseSimpleLogin, 
 		login:function(user) {
 			user.rememberMe = "true";
 			auth.$login('password', user).then(function(user) {
-				User.initUser(user);
 				$location.path("/lists");
 			}, function(e) {
 				console.log(e);

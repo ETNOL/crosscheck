@@ -57,6 +57,23 @@ body {
   }
 }
 
+#team-menu {
+  position:absolute;
+  right:5em;
+  bottom:10em;
+  height:9em;
+  width:24em;
+  border:2px solid #333;
+  border-radius:5px;
+  padding-top:1em;
+
+  .btn {
+    margin-top:0.3em;
+  }
+}
+
+
+
 
 
 

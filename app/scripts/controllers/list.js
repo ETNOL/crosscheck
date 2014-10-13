@@ -1,13 +1,17 @@
 'use strict';
 
 
-app.controller('ListCtrl', function (Team, List, $routeParams, $scope, User, $rootScope, $firebase, FIREBASE_URL) {
+app.controller('ListCtrl', function (Team, List, $routeParams, $scope, User, $firebase, FIREBASE_URL) {
 
 	var ref = new Firebase(FIREBASE_URL + "/lists")
  
 	$scope.items;
-	
+
+	$scope.team;
+
 	$scope.teamSize = Team.all.length;
+
+	
 
 	$scope.totalChecks = function(index) {
 		var checkArray = [];
@@ -45,12 +49,24 @@ app.controller('ListCtrl', function (Team, List, $routeParams, $scope, User, $ro
 			List.resetList();
 		}
 	};
+	
+	$scope.openTeamMenu = false;
+	$scope.teamMenu = function() {
+		return $scope.openTeamMenu;
+	}
+	$scope.toggleTeamMenu = function() {
+		$scope.openTeamMenu = !$scope.openTeamMenu;	
+	}
+
+	
 
 	function initializeListItems () {
 		User.getCurrent().then(function(user) {
 			console.log($routeParams);
 			List.items = $firebase(ref.child(user.id).child($routeParams.listid).child("items")).$asArray();
+			Team.members = $firebase(ref.child(user.id).child($routeParams.listid).child("team")).$asArray();
 			$scope.items = List.items;
+			$scope.team = List.team;
 		})
 	}
 

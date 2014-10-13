@@ -1,7 +1,7 @@
 'use strict';
 
 
-app.factory('Team', function(FIREBASE_URL) {
+app.factory('Team', function(User, FIREBASE_URL) {
 
 	var team = [
 	{
@@ -11,13 +11,17 @@ app.factory('Team', function(FIREBASE_URL) {
 	}
 	];
 
-	var ref = new Firebase(FIREBASE_URL + 'teams');
-
 	var Team = {
 		
 		all:team,
 		
-		memberCount:team.length
+		memberCount:team.length,
+
+		add: function(email) {
+			User.findByEmail(email).then(function(user) {
+			console.log("User found!" + user);
+			});
+		}
 	};
 
 	return Team;

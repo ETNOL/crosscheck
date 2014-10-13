@@ -15,7 +15,7 @@ app.controller("AuthCtrl", function($location, $scope, $rootScope, Auth, User) {
 
 	$scope.register = function() {
 		Auth.register($scope.user).then(function(authUser) {
-			User.create(authUser, $scope.user.username);}).then(function() {
+			User.create(authUser);}).then(function() {
 			$location.path("/login");
 		}, function(error) {
 			$scope.error = error.toString();
