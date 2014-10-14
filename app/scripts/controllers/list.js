@@ -2,19 +2,13 @@
 
 
 app.controller('ListCtrl', function (Team, List, $routeParams, $scope, User, $firebase, FIREBASE_URL) {
-
-	var ref = new Firebase(FIREBASE_URL + "/lists")
  
 	$scope.items;
 
 	$scope.team;	
 
-	$scope.totalChecks = function(index) {
-		var checkArray = [];
-		for (var i = 0; i < List.checks(index); i++) {
-			checkArray.push(i);
-		}
-		return checkArray;
+	$scope.checksAsArray = function(index) {
+		return List.checksAsArray(index);
 	};
 
 	$scope.checks = function(index) {
@@ -26,44 +20,36 @@ app.controller('ListCtrl', function (Team, List, $routeParams, $scope, User, $fi
 	};
 
 	$scope.addItem = function () {
-		List.add({
-			item:$scope.item.description,
-			checks:0
-							});
-		$scope.item = {description:""};
-	};
-
-	$scope.checked = function (item) {
-		if (item.checks == 1 ) {
-			return true;
-		}
+		List.add(newItem());
+		$scope.item.description = "";
 	};
 
 	$scope.resetList = function() {
-		var confirmed = confirm("Are you sure you want to reset the list?");
-		if (confirmed) {
+		if ( confirm("Are you sure you want to reset the list?") ) {
 			List.resetList();
 		}
 	};
 	
-	$scope.openTeamMenu = false;
-	$scope.teamMenu = function() {
-		return $scope.openTeamMenu;
-	}
-	$scope.toggleTeamMenu = function() {
-		$scope.openTeamMenu = !$scope.openTeamMenu;	
-	}
+
 
 	
 
 	function initializeListItems () {
 		User.getCurrent().then(function(user) {
+			var ref = new Firebase(FIREBASE_URL + "/lists");
 			List.object = $firebase(ref.child($routeParams.listid)).$asObject(); 
 			List.items = $firebase(ref.child($routeParams.listid).child("items")).$asArray();
 			Team.members = $firebase(ref.child($routeParams.listid).child("members")).$asArray();
 			$scope.items = List.items;
 			$scope.team = Team.members;
 		})
+	};
+
+	function newItem() {
+		return {
+			item:$scope.item.description,
+			checks:0
+		}
 	}
 
 	initializeListItems();

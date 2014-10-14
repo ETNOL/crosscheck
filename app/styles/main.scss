@@ -60,15 +60,27 @@ body {
 #team-menu {
   position:absolute;
   right:5em;
-  bottom:10em;
+  bottom:7em;
   height:9em;
   width:24em;
   border:2px solid #333;
   border-radius:5px;
   padding-top:1em;
+  padding-bottom:10.3em;
 
+  .close {
+    margin-top:-0.3em;
+    margin-right:0.6em;
+  }
   .btn {
     margin-top:0.3em;
+    margin-bottom:0em;
+  }
+
+  .notification {
+    margin-top:0em;
+    padding:0.6em;
+    border-radius:2px;
   }
 }
 

@@ -1,7 +1,7 @@
 'use strict';
 
 
-app.factory("List", function(User, $rootScope, $firebase, FIREBASE_URL) {
+app.factory("List", function($rootScope, User, $firebase, FIREBASE_URL) {
 	
 	var List = {
 
@@ -51,6 +51,14 @@ app.factory("List", function(User, $rootScope, $firebase, FIREBASE_URL) {
 				this.items[i].checks = 0;
 				this.items.$save(i);
 			}
+		},
+
+		checksAsArray: function (index) {
+			var checkArray = [];
+			for (var i = 0; i < this.checks(index); i++) {
+				checkArray.push(i);
+			}
+			return checkArray;
 		}
 	};
 
