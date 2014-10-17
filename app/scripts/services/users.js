@@ -48,7 +48,7 @@ app.factory('User', function($rootScope, $q, $firebase, FIREBASE_URL) {
 		},
 
 		addList:function(listId, listName, email) {
-			var userEmail = email || this.user.email;
+			var userEmail = email || $rootScope.currentUser.email;
 			var userArray = this.findByEmail(userEmail);
 			userArray.$loaded(function(user) {
 				var username = user[0].$id;
