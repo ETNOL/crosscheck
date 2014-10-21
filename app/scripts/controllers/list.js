@@ -1,7 +1,7 @@
 'use strict';
 
 
-app.controller('ListCtrl', function (Team, List, $routeParams, $scope, User, $firebase, FIREBASE_URL) {
+app.controller('ListCtrl', function ($location, Team, List, $routeParams, $scope, User, $firebase, FIREBASE_URL) {
  
 	$scope.items;
 
@@ -29,6 +29,14 @@ app.controller('ListCtrl', function (Team, List, $routeParams, $scope, User, $fi
 			List.resetList();
 		}
 	};
+
+	$scope.deleteList = function() {
+		if ( confirm("Are you sure you want to delete this list?")) {
+			List.deleteList($routeParams);
+			Team.deleteLists($routeParams, Team.members);
+			$location.path('/lists');
+		}
+	}
 	
 
 

@@ -3,14 +3,6 @@
 
 app.factory('Team', function(List, User, FIREBASE_URL) {
 
-	var team = [
-	{
-		name:"Eric"
-	},{
-		name:"Ariel"
-	}
-	];
-
 
 	var Team = {
 		
@@ -26,7 +18,21 @@ app.factory('Team', function(List, User, FIREBASE_URL) {
 			this.members.$add(newMember);	
 			//Second, add the list to the user's lists //
 			User.addList(List.object.$id, List.object.listName, user.email); 
+		},
+
+		deleteLists: function(list, team) {
+			for (var i = 0; i < team.length ; i++) {
+				if (team[i].$value) {
+					var username = team[i].$value;
+					User.deleteList(list, username);
+				} else if (team[i].username) {
+					var username = team[i].username;
+					User.deleteList(list, username);
+				}
+			}
 		}
+
+
 	};
 
 	return Team;

@@ -4,20 +4,44 @@ describe('Controller: ListsCtrl', function () {
   beforeEach(module('crossCheckApp'));
 
   var ListsCtrl,
-    user,
+    listsServiceMock,
+    userServiceMock,
     location,
     scope;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($location, $controller, $rootScope) {
+  beforeEach(inject(function ($location, $controller, $rootScope, $q) {
     rootScope = $rootScope;
     scope = $rootScope.$new();
     location = $location;
-    user = {
+    
+    listsServiceMock = {
+      newList: function() {},
+      deleteList: function() {}
+    };
+    
+    userServiceMock = {
+      getCurrent:function() { 
+        var userObject = {
+          then: function() { return { email:"test@example.com" } } 
+        };
+        return userObject;
+      },
 
-    }; 
+      findByEmail:function(email) { 
+        return { 
+          $loaded: function() {
+            return [{$id:1}] 
+          }
+        };
+        
+      }
+    }
+
     ListsCtrl = $controller('ListsCtrl', {
       $scope: scope,
+      Lists:listsServiceMock,
+      User:userServiceMock
     });
   }));
 
@@ -29,10 +53,20 @@ describe('Controller: ListsCtrl', function () {
   });
 
   it('creates a new list', function() {
-    expect(scope.lists.length).toEqual(2);
+    spyOn(listsServiceMock, 'newList').andCallThrough();
     scope.newList();
-    expect(scope.lists.length).toEqual(3); 
-  })
+    expect(listsServiceMock.newList).toHaveBeenCalled();
+  });
+
+  it('initializes the user and users lists', function () {
+    // Can't crack this case...
+  });
+
+  it('calls for a list to be deleted', function() {
+    spyOn(listsServiceMock, 'deleteList').andCallThrough();
+    scope.deleteList();
+    expect(listsServiceMock.deleteList).toHaveBeenCalled();
+  });
   
 
 });

@@ -58,6 +58,13 @@ app.factory('User', function($rootScope, $q, $firebase, FIREBASE_URL) {
 					userRef.$save();
 				});
 			});	
+		},
+
+		deleteList:function(list, username) {
+			console.log(list);
+			var ref = new Firebase(FIREBASE_URL + '/crossCheckUsers/' + 
+				username + '/lists/' + list.listid);
+			ref.remove();
 		}
 	};
 

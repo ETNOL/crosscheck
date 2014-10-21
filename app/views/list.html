@@ -9,18 +9,20 @@
 	<br/>
 	</div>
 	<div class="row">
-		<div class="col-xs-9">
+		<div class="col-xs-6">
 			<form class="form-inline" ng-submit="addItem()">
 				<input type="text" class="form-control" ng-model="item.description">
 				<input type="submit" class="btn btn-primary" value="Add item">			
 			</form>
 		</div>
-		<div class="col-xs-3">
-				<button ng-click="resetList()" class="btn btn-warning">Reset List</button>
-				
+		<div class="col-xs-4 col-xs-offset-2">
+			<button ng-click="resetList()" class="btn btn-warning">Reset List</button>	
+			<button ng-click="deleteList()" class="btn btn-danger">Delete List</button>
 		</div>
 	</div>
 </div></br>
 <ng-include  src=" 'views/team.html' "></ng-include>
+
+
 
 
