@@ -45,7 +45,7 @@ describe('Controller: ListsCtrl', function () {
     });
   }));
 
-  it('changes route to a selected list', function () {
+  it('calls a new route to a selected list', function () {
     var list = {$id:"list_id"};
     scope.loadList(list);
     rootScope.$apply();
@@ -53,19 +53,25 @@ describe('Controller: ListsCtrl', function () {
   });
 
   it('creates a new list', function() {
-    spyOn(listsServiceMock, 'newList').andCallThrough();
+    spyOn(listsServiceMock, 'newList');
     scope.newList();
     expect(listsServiceMock.newList).toHaveBeenCalled();
   });
 
-  it('initializes the user and users lists', function () {
-    // Can't crack this case...
+  it('clears newList.listName on new list', function() {
+    scope.newList['listName'] = "test list";
+    scope.newList();
+    expect(scope.newList.listName).toEqual("");
   });
 
   it('calls for a list to be deleted', function() {
-    spyOn(listsServiceMock, 'deleteList').andCallThrough();
+    spyOn(listsServiceMock, 'deleteList');
     scope.deleteList();
     expect(listsServiceMock.deleteList).toHaveBeenCalled();
+  });
+
+  it('initializes the user and users lists', function () {
+    // Can't crack this case...
   });
   
 

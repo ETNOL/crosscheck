@@ -18,17 +18,22 @@ app.controller('TeamCtrl', function($scope, Team, User) {
 		var newMember = User.findByEmail($scope.newMember.email);
 		newMember.$loaded(function() {
 			var memberObject = newMember[0];
-			
+
 			if (memberObject == undefined ) {
 				$scope.notificationStyle = "bg-danger";
 				return $scope.notification = "Crosscheck member not found!";
 			}
 			Team.add(memberObject);
-			$scope.notificationStyle = "bg-success";
-			$scope.notification = "Team member added!";
-			$scope.newMember.email = '';
+			confirmTeamMemberAdded();
 		});
 	};
+
+	function confirmTeamMemberAdded () {
+		$scope.notificationStyle = "bg-success";
+		$scope.notification = "Team member added!";
+		$scope.newMember.email = '';
+
+	}
 
 
 })

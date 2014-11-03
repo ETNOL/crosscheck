@@ -1,9 +1,6 @@
 <div ng-controller="TeamCtrl" class="container">
+<button ng-click="toggleTeamMenu()" class="btn btn-info">Team</button>
 	<div class="row">
-		<div class="col-xs-6 col-xs-offset-9">
-			<button ng-click="toggleTeamMenu()" class="btn btn-info">Team</button>
-		</div>
-	</div>
 	<div id="team-menu" ng-show="teamMenu()">
 	<button ng-click="toggleTeamMenu()" type="button" class="close"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 		<div class="container">

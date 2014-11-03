@@ -2,7 +2,7 @@
 
 
 
-app.controller("AuthCtrl", function($location, $scope, $rootScope, Auth, User) {
+app.controller("AuthCtrl", function($location, $scope, Auth, User) {
 
 	if ( User.signedIn() ) {
 		$location.path("/lists");

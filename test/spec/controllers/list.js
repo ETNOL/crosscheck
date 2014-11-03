@@ -7,78 +7,101 @@ describe('Controller: ListCtrl', function () {
 
   var ListCtrl,
     scope,
-    List;
+    teamServiceMock,
+    listServiceMock,
+    locationMock;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
+    // Assumes Confirmation windows will be returned true //
+    spyOn(window, 'confirm').andReturn(true);
+    
     scope = $rootScope.$new();
 
-    List = {
-      checks:function(index) {
-        return 3;
-      },
-      testItems:[
-        {
-          description:"item one",
-          checks:2
-        },
-                {
-          description:"item two",
-          checks:5
-        }
-      ], 
-      check:function(index) {
-        this.testItems[0].checks++;
-      }, 
-      add:function(object) {
-        this.testItems.push(object);
-      },
-      resetList:function() {
-        for (var i = 0; i < this.testItems.length; i++) {
-          this.testItems[i].checks = 0;
-        }
-      },
-      checksAsArray:function(index) {
-        return [0, 1, 2];
-      }
-    }
+
+    teamServiceMock = {
+      deleteLists:function() {}
+    };
+
+    listServiceMock = {
+      checksAsArray: function(index) {return [0,1,2] },
+      checks: function(index) { return 3 },
+      check: function(index) {},
+      add: function() {},
+      resetList: function() {},
+      deleteList: function() {}
+    };
+
+    locationMock = {
+      path:function(path) {}
+    };
+
     ListCtrl = $controller('ListCtrl', {
       $scope: scope,
-      List: List
+      List: listServiceMock,
+      Team: teamServiceMock,
+      $location: locationMock
+
     });
+
   }));
 
-  it('returns an array representing checks on a list item', function () {
-    expect(scope.checksAsArray(0)).toEqual([0, 1, 2]);
+  it('calls and returns List.checksAsArray on checksAsArray', function () {
+    spyOn(listServiceMock, 'checksAsArray').andCallThrough();
+    var methodReturn = scope.checksAsArray(1);
+    expect(methodReturn).toEqual([0,1,2]);
+    expect(listServiceMock.checksAsArray).toHaveBeenCalled();
+
   });
   
-  it('returns an integer for total checks on a list item', function () {
+  it('calls and returns List.checks on checks', function () {
+    spyOn(listServiceMock, 'checks').andCallThrough();
+    var methodReturn = scope.checks(0);
     expect(scope.checks(0)).toEqual(3);
+    expect(listServiceMock.checks).toHaveBeenCalled();
   });
 
-  it('adds checks onto a item', function() {
-    var item = List.testItems[0];
-    expect(item.checks).toEqual(2);
+  it('calls List.check on checkItem', function() {
+    spyOn(listServiceMock, 'check');
     scope.checkItem(0);
-    expect(item.checks).toEqual(3);
+    expect(listServiceMock.check).toHaveBeenCalled()
   });
 
-  it('adds items to the list', function() {
-    scope.item = {description:"new item"}
-    expect(List.testItems.length).toEqual(2);
+  it('calls List.add on addItem', function() {
+    scope.item = {description:"new item"};
+    spyOn(listServiceMock, 'add');
     scope.addItem();
-    expect(List.testItems.length).toEqual(3);
+    expect(listServiceMock.add).toHaveBeenCalled();
+  });
+
+  it('clears item.description on addItem', function() {
+    scope.item = {description:"new item"};
+    scope.addItem();
+    expect(scope.item.description).toEqual('');
   });
   
-  it('resets all checks on all list items', function() {
-    spyOn(window, 'confirm').andReturn(true);
-    var items = List.testItems;
-    expect(items[0].checks).not.toEqual(0);
-    expect(items[1].checks).not.toEqual(0);
+  it('calls List.resetList on resetList', function() {
+    spyOn(listServiceMock, 'resetList');
     scope.resetList();
-    expect(items[0].checks).toEqual(0);
-    expect(items[1].checks).toEqual(0);
-  })
+    expect(listServiceMock.resetList).toHaveBeenCalled();
+  });
 
+  it('calls List.deleteList on deleteList if confirmed', function() {
+    spyOn(listServiceMock, 'deleteList');
+    scope.deleteList();
+    expect(listServiceMock.deleteList).toHaveBeenCalled();
+  });
+
+  it('calls Team.deleteLists on deleteList if confirmed', function() {
+    spyOn(teamServiceMock, 'deleteLists');
+    scope.deleteList();
+    expect(teamServiceMock.deleteLists).toHaveBeenCalled();
+  });
+
+  it('routes after on deleteList if confirmed', function() {
+    spyOn(locationMock, 'path');
+    scope.deleteList();
+    expect(locationMock.path).toHaveBeenCalled();
+  });
 
 });

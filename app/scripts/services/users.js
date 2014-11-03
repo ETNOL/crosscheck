@@ -7,6 +7,7 @@ app.factory('User', function($rootScope, $q, $firebase, FIREBASE_URL) {
 
 	var User = {
 		
+		// User.create(authUser, username).then();
 		create:function(authUser, username) {
 			var user = $firebase(ref.child(username)).$asObject();
 
@@ -19,14 +20,17 @@ app.factory('User', function($rootScope, $q, $firebase, FIREBASE_URL) {
 			});
 		},
 
+		// User.findByEmail(email).then();
 		findByEmail:function(email) {
 			return $firebase(ref.startAt(email).endAt(email)).$asArray();
 		},
 
+		// User.setCurrent(user);
 		setCurrent:function(user) {
 			$rootScope.currentUser = user;
 		},
 
+		//User.getCurrent();
 		getCurrent:function () {
 		  var deferred = $q.defer();
 
@@ -43,10 +47,12 @@ app.factory('User', function($rootScope, $q, $firebase, FIREBASE_URL) {
 		  return deferred.promise;
 		},
 
+		// User.signedIn();
 		signedIn:function() {
 			return $rootScope.currentUser !== undefined;
 		},
 
+		// User.addList(listId, listName, email);
 		addList:function(listId, listName, email) {
 			var userEmail = email || $rootScope.currentUser.email;
 			var userArray = this.findByEmail(userEmail);
@@ -60,10 +66,10 @@ app.factory('User', function($rootScope, $q, $firebase, FIREBASE_URL) {
 			});	
 		},
 
-		deleteList:function(list, username) {
-			console.log(list);
+		// User.deleteList(listId, username);
+		deleteList:function(listId, username) {
 			var ref = new Firebase(FIREBASE_URL + '/crossCheckUsers/' + 
-				username + '/lists/' + list.listid);
+				username + '/lists/' + listId);
 			ref.remove();
 		}
 	};

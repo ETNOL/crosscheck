@@ -61,8 +61,8 @@ app.factory("List", function($rootScope, User, $firebase, FIREBASE_URL) {
 			return checkArray;
 		},
 
-		deleteList: function(listID) {
-			var listRef = new Firebase (FIREBASE_URL + '/lists/' + listID.listid);
+		deleteList: function(listId) {
+			var listRef = new Firebase (FIREBASE_URL + '/lists/' + listId);
 			listRef.remove();
 			
 		}

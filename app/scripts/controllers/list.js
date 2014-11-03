@@ -31,9 +31,9 @@ app.controller('ListCtrl', function ($location, Team, List, $routeParams, $scope
 	};
 
 	$scope.deleteList = function() {
-		if ( confirm("Are you sure you want to delete this list?")) {
-			List.deleteList($routeParams);
-			Team.deleteLists($routeParams, Team.members);
+		if ($scope.confirmDelete() ) {
+			List.deleteList($routeParams.listid);
+			Team.deleteLists($routeParams.listid, Team.members);
 			$location.path('/lists');
 		}
 	}
@@ -53,11 +53,15 @@ app.controller('ListCtrl', function ($location, Team, List, $routeParams, $scope
 		})
 	};
 
-	function newItem() {
+	function newItem () {
 		return {
 			item:$scope.item.description,
 			checks:0
 		}
+	}
+
+	$scope.confirmDelete = function () {
+		return confirm("Are you sure you want to delete this list?");
 	}
 
 	initializeListItems();

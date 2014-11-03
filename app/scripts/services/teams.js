@@ -20,14 +20,14 @@ app.factory('Team', function(List, User, FIREBASE_URL) {
 			User.addList(List.object.$id, List.object.listName, user.email); 
 		},
 
-		deleteLists: function(list, team) {
+		deleteLists: function(listId, team) {
 			for (var i = 0; i < team.length ; i++) {
 				if (team[i].$value) {
 					var username = team[i].$value;
-					User.deleteList(list, username);
+					User.deleteList(listId, username);
 				} else if (team[i].username) {
 					var username = team[i].username;
-					User.deleteList(list, username);
+					User.deleteList(listId, username);
 				}
 			}
 		}
